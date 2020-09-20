@@ -1,20 +1,51 @@
-import React, { useState } from 'react';
-import { Dimensions, StyleSheet, Text, View, StatusBar, Alert, TouchableOpacity, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { AsyncStorage, StyleSheet, Text, View, StatusBar, TouchableOpacity, Image } from 'react-native';
 import Matter from "matter-js";
 import { GameEngine } from "react-native-game-engine";
 import Bird from './Bird';
-import Pipe from './Pipe';
 import Floor from './Floor';
 import Physics, { resetPipeCount } from './Physics';
 import Constants from './Constants';
 import Images from './assets/Images';
 import PointSound from './components/PointSound';
 import HitSound from './components/HitSound';
+import DieSound from './components/DieSound';
 
 const App = () => {
 
     const [running, setRunning] = useState(true);
     const [score, setScore] = useState(0);
+    const [highScore, setHighScore] = useState(0);
+
+    // const storeHighScrore = async (value) => {
+    //     try {
+    //         const jsonValue = JSON.stringify(value)
+    //         await AsyncStorage.setItem('@highscore', jsonValue)
+    //         console.log('check value', jsonValue)
+
+    //     } catch (e) {
+    //         // saving error
+    //         console.log('error set', e)
+    //     }
+    // }
+
+    // const getHighScore = async () => {
+    //     try {
+    //         const value = await AsyncStorage.getItem('@highscore')
+    //         if (value !== null) {
+    //             // value previously stored
+    //             console.log('check high scrore', value);
+    //             setHighScore(parseInt(value));
+    //         }
+    //     } catch (e) {
+    //         console.log('error read', e)
+    //         // error reading value
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     getHighScore();
+    // }), [];
 
     setupWorld = () => {
         let engine = Matter.Engine.create({ enableSleeping: false });
@@ -38,10 +69,12 @@ const App = () => {
         );
 
         Matter.World.add(world, [bird, floor1]);
+        // Matter.World.add(world, [bird, floor2]);
         Matter.Events.on(engine, 'collisionStart', (event) => {
             var pairs = event.pairs;
             HitSound();
             gameEngine.dispatch({ type: "game-over" });
+            // DieSound();
         });
 
         return {
@@ -88,7 +121,8 @@ const App = () => {
             {!running && <TouchableOpacity style={styles.fullScreenButton} onPress={reset}>
                 <View style={styles.fullScreen}>
                     <Text style={styles.gameOverText}>Game Over</Text>
-                    <Text style={styles.gameOverSubText}>Try Again</Text>
+                    <Text style={styles.gameOverSubText}>Score: {score}</Text>
+                    {/* <Text style={styles.gameOverSubText}>Best Score: {highScore}</Text> */}
                 </View>
             </TouchableOpacity>}
         </View>
