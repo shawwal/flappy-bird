@@ -2,6 +2,7 @@ import Matter from "matter-js";
 import Constants from './Constants';
 import Pipe from './Pipe';
 import PipeTop from './PipeTop';
+import WingSound from './components/WingSound';
 
 let tick = 0;
 let pose = 1;
@@ -20,8 +21,6 @@ export const generatePipes = () => {
     if (Math.random() < 0.5) {
         sizes = sizes.reverse();
     }
-
-
     return sizes;
 }
 
@@ -113,6 +112,7 @@ const Physics = (entities, { touches, time, dispatch }) => {
               x: bird.velocity.x,
               y: -10
             });
+            WingSound();
         }
     });
 

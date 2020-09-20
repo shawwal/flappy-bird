@@ -8,6 +8,8 @@ import Floor from './Floor';
 import Physics, { resetPipeCount } from './Physics';
 import Constants from './Constants';
 import Images from './assets/Images';
+import PointSound from './components/PointSound';
+import HitSound from './components/HitSound';
 
 const App = () => {
 
@@ -38,9 +40,8 @@ const App = () => {
         Matter.World.add(world, [bird, floor1]);
         Matter.Events.on(engine, 'collisionStart', (event) => {
             var pairs = event.pairs;
-
+            HitSound();
             gameEngine.dispatch({ type: "game-over" });
-
         });
 
         return {
@@ -59,7 +60,8 @@ const App = () => {
             //Alert.alert("Game Over");
             setRunning(false)
         } else if (e.type === "score") {
-            setScore(score + 1)
+            setScore(score + 1);
+            PointSound();
         }
     }
 

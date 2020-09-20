@@ -9,12 +9,13 @@
   },
   "dependencies": {
     "expo": "~38.0.8",
+    "expo-av": "~8.2.1",
+    "matter-js": "0.14.2",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.1.tar.gz",
-    "react-native-web": "^0.11.7",
-    "matter-js": "0.14.2",
-    "react-native-game-engine": "1.2.0"
+    "react-native-game-engine": "1.2.0",
+    "react-native-web": "^0.11.7"
   },
   "devDependencies": {
     "babel-preset-expo": "^7.1.0"
